@@ -40,14 +40,18 @@ const Hero = () => {
       delay: 0.8,
     });
 
-    gsap.timeline({
-      scrollTrigger: {
-        trigger: "#hero",
-        start: "top top",
-        end: "bottom top",
-        scrub: true,
-      },
-    });
+    gsap
+      .timeline({
+        scrollTrigger: {
+          trigger: "#hero",
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
+      })
+      .to(".right-leaf", { y: 200 }, 0)
+      .to(".left-leaf", { y: -200 }, 0)
+      .to("p", { opacity: 0.3 }, 0);
   }, []);
 
   return (
@@ -79,7 +83,9 @@ const Hero = () => {
                 creative flair, and timeless recipes — designed to delight your
                 senses.
               </p>
-              <a href="#cocktails">View Cocktails</a>
+              <a href="#cocktails" className="view-cocktail">
+                View Cocktails
+              </a>
             </div>
           </div>
         </div>
