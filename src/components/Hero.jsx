@@ -1,8 +1,19 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
+import _SplitText from "gsap/SplitText";
 import SplitText from "gsap/SplitText";
+import { useRef } from "react";
+import { useMediaQuery } from "react-responsive";
+
+gsap.registerPlugin(ScrollTrigger, _SplitText);
 
 const Hero = () => {
+  const videoRef = useRef();
+  const videoTimelineRef = useRef();
+
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+
   useGSAP(() => {
     const heroSplit = new SplitText(".title", { type: "chars, words" });
     const paragraphSplit = new SplitText(".subtitle", { type: "lines" });
@@ -49,9 +60,29 @@ const Hero = () => {
           scrub: true,
         },
       })
+      .to(".title", { scale: 0.7, y: 50 })
       .to(".right-leaf", { y: 200 }, 0)
       .to(".left-leaf", { y: -200 }, 0)
-      .to("p", { opacity: 0.3 }, 0);
+      .to(".p-tag", { opacity: 0.3, y: 50 }, 0);
+
+    const startValue = isMobile ? "top 50%" : "center 60%";
+    const endValue = isMobile ? "top 30%" : "bottom top";
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".video",
+        start: startValue,
+        end: endValue,
+        scrub: true,
+        pin: true,
+      },
+    });
+
+    videoRef.current.onloadedmetadata = () => {
+      tl.to(videoRef.current, {
+        currentTime: videoRef.current.duration,
+      });
+    };
   }, []);
 
   return (
@@ -70,14 +101,14 @@ const Hero = () => {
         />
         <div className="body">
           <div className="content">
-            <div className="space-y-5 hidden md:block">
+            <div className="space-y-5 hidden md:block p-tag">
               <p>Cool. Crisp. Classic.</p>
               <p className="subtitle">
                 Sip the Spirit <br /> of Summer
               </p>
             </div>
 
-            <div className="view-cocktails">
+            <div className="view-cocktails p-tag">
               <p className="subtitle">
                 Every cocktail on our menu is a blend of premium ingredients,
                 creative flair, and timeless recipes — designed to delight your
@@ -90,6 +121,16 @@ const Hero = () => {
           </div>
         </div>
       </section>
+
+      <div className="video absolute inset-0 w-full h-screen">
+        <video
+          src="/videos/output.mp4"
+          ref={videoRef}
+          muted
+          playsInline
+          preload="auto"
+        />
+      </div>
     </>
   );
 };
