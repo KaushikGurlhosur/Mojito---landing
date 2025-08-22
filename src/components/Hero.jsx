@@ -125,6 +125,7 @@ const Hero = () => {
       <div className="video absolute inset-0 w-full h-screen">
         <video
           src="/videos/output.mp4"
+          type="video/mp4"
           ref={videoRef}
           muted
           playsInline
