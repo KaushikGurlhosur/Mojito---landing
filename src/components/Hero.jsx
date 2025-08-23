@@ -1,16 +1,15 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import _SplitText from "gsap/SplitText";
 import SplitText from "gsap/SplitText";
+
 import { useRef } from "react";
 import { useMediaQuery } from "react-responsive";
 
-gsap.registerPlugin(ScrollTrigger, _SplitText);
+gsap.registerPlugin(ScrollTrigger, SplitText);
 
 const Hero = () => {
   const videoRef = useRef();
-  const videoTimelineRef = useRef();
 
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
