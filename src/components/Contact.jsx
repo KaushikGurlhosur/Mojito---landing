@@ -1,7 +1,77 @@
 import gsap from "gsap";
 import { openingHours, socials } from "../../constants";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SplitText } from "gsap/SplitText";
+
+gsap.registerPlugin(ScrollTrigger, SplitText);
 
 const Contact = () => {
+  useGSAP(() => {
+    const titleSplit = SplitText.create("#contact h2", {
+      type: "words",
+    });
+
+    const timeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: "#contact",
+        start: "top center",
+        end: "bottom 90%",
+        scrub: true,
+      },
+      ease: "power1.inOut",
+    });
+
+    timeline
+      .from(titleSplit.words, {
+        opacity: 0,
+        yPercent: 100,
+        stagger: 0.02,
+      })
+      .from("#contact h3, #contact p", {
+        opacity: 0,
+        yPercent: 100,
+        stagger: 0.02,
+      })
+      .to("#f-right-leaf", {
+        y: -100,
+        duration: 1,
+        ease: "power1.inOut",
+      })
+      .to(
+        "#f-left-leaf",
+        {
+          y: 100,
+          duration: 1,
+          ease: "power1.inOut",
+        },
+        "<"
+      );
+
+    // gsap.from("#f-right-leaf", {
+    //   y: 300,
+    //   duration: 3,
+    //   scrollTrigger: {
+    //     trigger: "#contact",
+    //     start: "top 90%",
+    //     end: "bottom 60%",
+    //     scrub: true,
+    //     ease: "power1.out",
+    //   },
+    // });
+    // gsap.from("#f-left-leaf", {
+    //   y: -300,
+    //   duration: 3,
+    //   scrollTrigger: {
+    //     trigger: "#contact",
+    //     start: "top 60%",
+    //     end: "bottom 90%",
+    //     scrub: true,
+    //     ease: "power1.out",
+    //   },
+    // });
+  }, []);
+
   return (
     <footer id="contact">
       <img
