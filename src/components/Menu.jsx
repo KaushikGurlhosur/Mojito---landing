@@ -59,7 +59,7 @@ const Menu = () => {
       </nav>
 
       <div className="content">
-        <div className="arrow">
+        <div className="arrows">
           <button
             className="text-left"
             onClick={() => goToSlide(currentIndex - 1)}>

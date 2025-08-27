@@ -16,6 +16,7 @@ const About = () => {
         trigger: "#about",
         start: "top 80%",
         end: "bottom 90%",
+
         scrub: true,
       },
     });
